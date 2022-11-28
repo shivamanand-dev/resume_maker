@@ -1,3 +1,5 @@
+import { PrimaryButton } from "../components/Buttons";
+
 export default function Home() {
-  return <div>Hello</div>;
+  return <PrimaryButton />;
 }
