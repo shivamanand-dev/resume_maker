@@ -34,5 +34,6 @@ module.exports = {
     "simple-import-sort/imports": "error",
     "unicorn/filename-case": "off",
     "unicorn/prevent-abbreviations": "off",
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
   },
 };
