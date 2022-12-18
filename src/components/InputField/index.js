@@ -9,6 +9,7 @@ function InputField({
   value,
   onChange,
   error,
+  name,
 }) {
   return (
     <StyledInputField>
@@ -19,6 +20,7 @@ function InputField({
         value={value}
         onChange={onChange}
         error={error}
+        name={name}
       />
     </StyledInputField>
   );
