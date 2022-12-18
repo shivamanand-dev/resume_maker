@@ -5,8 +5,10 @@ const StyledInputField = styled.section`
   margin: 0.5rem auto;
 
   .MuiInput-root,
+  .MuiInputBase-root,
   .MuiInputBase-input {
     width: 100%;
+    color: #fff;
   }
 `;
 
