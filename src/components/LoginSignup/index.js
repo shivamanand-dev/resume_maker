@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { userService } from "src/services/user.serveice";
 
 import { PrimaryButton } from "../Buttons";
@@ -8,13 +7,15 @@ import InputField from "../InputField";
 import StyledLoginSignup from "./StyledLoginSignup";
 
 function LoginSignup({ activeForm = "login" }) {
-  const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
   const [formActiveStatus, setformActiveStatus] = useState(activeForm);
 
   function onclickLogin() {
-    userService.login(dispatch);
+    userService.login();
+    // console.log(userService.userValue);
   }
+
+  // console.log(userService);
   return (
     <StyledLoginSignup>
       <div>
