@@ -5,17 +5,17 @@ import { Provider } from "react-redux";
 import { userService } from "src/services/user.serveice";
 
 import store from "@/redux/store";
+import { ip_data_API } from "@/utils/constants/app_config";
 
 function MyApp({ Component, pageProps }) {
   const user = userService?.userValue;
 
   useEffect(() => {
     if (user) {
-      userService.updateUserCountry();
-      // reDirectUserToAuthRoute();
+      userService.updateUserCountry(ip_data_API);
     }
-    // setMounted(true);
-  }, []);
+  });
+
   return (
     <Provider store={store}>
       <Component {...pageProps} />

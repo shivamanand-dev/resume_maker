@@ -9,36 +9,49 @@ const userSubject = new BehaviorSubject(
 export const userService = {
   user: userSubject.asObservable(),
   get userValue() {
-    return userSubject.value?.userDetails;
+    return userSubject.value;
   },
   login,
+  signup,
+  logout,
   updateUserCountry,
+  updateProfile,
 };
 
-async function login() {
-  return await fetchWrapper
-    .post("/auth/login", {
-      username: "shivam",
-      password: "password",
-    })
-    .then((data) => {
-      // console.log(data);
-
-      userSubject.next(data);
+async function login(data) {
+  return await fetchWrapper.post("/auth/login", data).then((data) => {
+    if (data.success) {
+      userSubject.next(data.userDetails);
       localStorage.setItem("user", JSON.stringify(data.userDetails));
-    });
+    }
+
+    return data;
+  });
 }
 
-async function updateUserCountry() {
+async function signup(data) {
+  return await fetchWrapper.post("/auth/signup", data).then((data) => {
+    if (data.success) {
+      userSubject.next(data.user);
+      localStorage.setItem("user", JSON.stringify(data.user));
+    }
+    return data;
+  });
+}
+
+async function logout() {
+  localStorage.clear();
+}
+
+async function updateUserCountry(api_key) {
   try {
     if (!userService?.userValue?.country) {
-      const country = await fetch(
-        "https://api.ipdata.co/?api-key=9d43923f3db77214133560b64c0d2679caad5a16b378e3f128f9f73e",
-        { method: "GET" }
-      ).then((res) => res.json());
+      const country = await fetch(`https://api.ipdata.co/?api-key=${api_key}`, {
+        method: "GET",
+      }).then((res) => res.json());
+
       await userService.updateProfile({
-        key: "country",
-        value: country?.country_code,
+        liveCountry: country?.country_code,
       });
     }
   } catch (error) {
@@ -46,4 +59,10 @@ async function updateUserCountry() {
     console.log({ error });
     return error;
   }
+}
+
+async function updateProfile(data) {
+  return await fetchWrapper.put("/profile/update", data).then((res) => {
+    userSubject.next(res);
+  });
 }
