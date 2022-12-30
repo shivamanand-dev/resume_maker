@@ -8,9 +8,10 @@ function getCombinedUrl(url) {
 
 export const fetchWrapper = {
   post,
+  put,
 };
 
-function post(url, body) {
+async function post(url, body) {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -20,11 +21,24 @@ function post(url, body) {
     body: JSON.stringify(body),
   };
 
-  return fetch(getCombinedUrl(url), requestOptions).then(handleResponse);
+  return await fetch(getCombinedUrl(url), requestOptions).then(handleResponse);
+}
+
+async function put(url, body) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      authToken:
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNhYjA3M2E1OWFjZDY0MDcyNzI5ZjRlIn0sImlhdCI6MTY3MjI5NDkzMX0.5LVG1eF6MTv5MGgeeYXKxiHfqWXlGTUsizzb88xFOJY",
+    },
+    origin: "*",
+    body: JSON.stringify(body),
+  };
+  return await fetch(getCombinedUrl(url), requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
-  //   console.log(response);
   return response.text().then((text) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
