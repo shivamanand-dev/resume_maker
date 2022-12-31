@@ -19,12 +19,18 @@ export const userService = {
 };
 
 async function login(data) {
-  return await fetchWrapper.post("/auth/login", data).then((data) => {
+  return await fetchWrapper.post("/auth/login", data).then(async (data) => {
+    await fetch("/api/login", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data.authToken),
+    });
     if (data.success) {
       userSubject.next(data.userDetails);
       localStorage.setItem("user", JSON.stringify(data.userDetails));
     }
-
     return data;
   });
 }

@@ -12,6 +12,7 @@ import StyledLoginSignup from "./StyledLoginSignup";
 
 function LoginSignup({ activeForm = "login" }) {
   const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
