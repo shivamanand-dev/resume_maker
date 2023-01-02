@@ -36,7 +36,14 @@ async function login(data) {
 }
 
 async function signup(data) {
-  return await fetchWrapper.post("/auth/signup", data).then((data) => {
+  return await fetchWrapper.post("/auth/signup", data).then(async (data) => {
+    await fetch("/api/login", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data.authToken),
+    });
     if (data.success) {
       userSubject.next(data.user);
       localStorage.setItem("user", JSON.stringify(data.user));
