@@ -2,10 +2,9 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
-import { userService } from "src/services/user.serveice";
+import { userService } from "src/services/user.service";
 
-import { ip_data_API } from "@/utils/constants/app_config";
-
+// import { ip_data_API } from "@/utils/constants/app_config";
 import { PrimaryButton } from "../Buttons";
 import InputField from "../InputField";
 import StyledLoginSignup from "./StyledLoginSignup";
@@ -15,6 +14,7 @@ function LoginSignup({ activeForm = "login" }) {
 
   const [formData, setFormData] = useState({
     name: "",
+    profilePic: "",
     email: "",
     username: "",
     password: "",
@@ -57,7 +57,7 @@ function LoginSignup({ activeForm = "login" }) {
   // On click Sign up
   async function onclickSignUp() {
     const response = await userService.signup(formData);
-    await userService.updateUserCountry(ip_data_API);
+    // await userService.updateUserCountry(ip_data_API);
 
     if (!response?.success) {
       setShowMessage({
@@ -84,6 +84,12 @@ function LoginSignup({ activeForm = "login" }) {
                 placeholder="Name"
                 type="text"
                 name="name"
+                onChange={handleOnchange}
+              />
+              <InputField
+                placeholder="Name"
+                type="file"
+                name="profilePic"
                 onChange={handleOnchange}
               />
               <InputField

@@ -1,7 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string */
 import { backendUri } from "@/utils/constants/app_config";
 
-import { userService } from "./user.serveice";
+import { userService } from "./user.service";
 
 function getCombinedUrl(url) {
   return backendUri + url;
