@@ -12,6 +12,7 @@ export const fetchWrapper = {
   put,
   handleResponse,
   getToken,
+  get,
 };
 
 async function getToken() {
@@ -22,6 +23,17 @@ async function getToken() {
     },
     body: JSON.stringify(),
   }).then(fetchWrapper.handleResponse);
+}
+
+async function get(url) {
+  const requestOption = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    origin: "*",
+  };
+  return await fetch(getCombinedUrl(url), requestOption).then(handleResponse);
 }
 
 async function post(url, body) {

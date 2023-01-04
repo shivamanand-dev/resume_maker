@@ -4,7 +4,8 @@ import React from "react";
 import { useState } from "react";
 import { userService } from "src/services/user.service";
 
-// import { ip_data_API } from "@/utils/constants/app_config";
+import { ip_data_API } from "@/utils/constants/app_config";
+
 import { PrimaryButton } from "../Buttons";
 import InputField from "../InputField";
 import StyledLoginSignup from "./StyledLoginSignup";
@@ -15,7 +16,7 @@ function LoginSignup({ activeForm = "login" }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    // profilePic: "",
+    profileImageUrl: "",
     username: "",
     password: "",
   });
@@ -26,11 +27,17 @@ function LoginSignup({ activeForm = "login" }) {
     message: "",
   });
 
+  const [profilePicture, setProfilePicture] = useState();
+
   // handle on Change for login
   function handleOnchange(e) {
-    // setFormData({ ...formData, [e.target.name]: e.target.files[0] });
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
+
+  function handleOnchangeProfilePic(e) {
+    setProfilePicture(e.target.files[0]);
+  }
+
   // On click Login
   async function onclickLogin() {
     const loginDetails = {
@@ -56,9 +63,12 @@ function LoginSignup({ activeForm = "login" }) {
 
   // On click Sign up
   async function onclickSignUp() {
-    const response = await userService.signup(formData);
-    // await userService.updateUserCountry(ip_data_API);
+    const imageUploadRes = await userService.uploadToS3(profilePicture);
 
+    setFormData({ ...formData, profileImageUrl: imageUploadRes.url });
+
+    const response = await userService.signup(formData);
+    await userService.updateUserCountry(ip_data_API);
     if (!response?.success) {
       setShowMessage({
         showing: true,
@@ -90,7 +100,7 @@ function LoginSignup({ activeForm = "login" }) {
                 placeholder="Name"
                 type="file"
                 name="profilePic"
-                onChange={handleOnchange}
+                onChange={handleOnchangeProfilePic}
               />
               <InputField
                 placeholder="Email"

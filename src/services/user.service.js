@@ -1,6 +1,7 @@
 import { BehaviorSubject } from "rxjs";
 
 import { fetchWrapper } from "./fetchWrapper";
+import { s3Apis } from "./s3Apis";
 
 const userSubject = new BehaviorSubject(
   typeof window !== "undefined" && JSON.parse(localStorage.getItem("user"))
@@ -16,6 +17,7 @@ export const userService = {
   logout,
   updateUserCountry,
   updateProfile,
+  uploadToS3,
 };
 
 async function login(data) {
@@ -78,4 +80,17 @@ async function updateProfile(data) {
   return await fetchWrapper.put("/profile/update", data).then((res) => {
     userSubject.next(res);
   });
+}
+
+async function uploadToS3(data) {
+  const securedLink = await fetchWrapper.get("/profile/getS3url");
+
+  const { success, s3URL } = securedLink;
+
+  if (success) {
+    const resData = await s3Apis.s3Put(s3URL, data);
+    const { status, ok, url } = resData;
+
+    return { status, ok, url: url.split("?")[0] };
+  }
 }
