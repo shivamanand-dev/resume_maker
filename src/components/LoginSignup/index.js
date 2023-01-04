@@ -14,8 +14,8 @@ function LoginSignup({ activeForm = "login" }) {
 
   const [formData, setFormData] = useState({
     name: "",
-    profilePic: "",
     email: "",
+    // profilePic: "",
     username: "",
     password: "",
   });
@@ -28,9 +28,9 @@ function LoginSignup({ activeForm = "login" }) {
 
   // handle on Change for login
   function handleOnchange(e) {
+    // setFormData({ ...formData, [e.target.name]: e.target.files[0] });
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
-
   // On click Login
   async function onclickLogin() {
     const loginDetails = {
