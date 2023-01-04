@@ -1,12 +1,28 @@
 import { Input } from "@material-ui/core";
 
-import StyledInputFields from "./StyledInputField";
+import StyledInputField from "./StyledInputField";
 
-function InputField() {
+function InputField({
+  placeholder,
+  required = false,
+  type = "text",
+  value,
+  onChange,
+  error,
+  name,
+}) {
   return (
-    <StyledInputFields>
-      <Input />
-    </StyledInputFields>
+    <StyledInputField>
+      <Input
+        placeholder={placeholder}
+        required={required}
+        type={type}
+        value={value}
+        onChange={onChange}
+        error={error}
+        name={name}
+      />
+    </StyledInputField>
   );
 }
 

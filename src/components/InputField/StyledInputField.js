@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
-const StyledInputFields = styled.section`
+const StyledInputField = styled.section`
   width: 100%;
   margin: 0.5rem auto;
+
   .MuiInput-root,
+  .MuiInputBase-root,
   .MuiInputBase-input {
     width: 100%;
+    color: #fff;
   }
 `;
 
-export default StyledInputFields;
+export default StyledInputField;
