@@ -63,7 +63,10 @@ function LoginSignup({ activeForm = "login" }) {
 
   // On click Sign up
   async function onclickSignUp() {
-    const imageUploadRes = await userService.uploadToS3(profilePicture);
+    const imageUploadRes = await userService.uploadToS3(
+      profilePicture,
+      "image"
+    );
 
     setFormData({ ...formData, profileImageUrl: imageUploadRes.url });
 
