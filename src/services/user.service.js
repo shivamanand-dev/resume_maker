@@ -1,7 +1,10 @@
+import imageCompression from "browser-image-compression";
 import { BehaviorSubject } from "rxjs";
 
 import { fetchWrapper } from "./fetchWrapper";
 import { s3Apis } from "./s3Apis";
+
+const imageType = "image/jpeg";
 
 const userSubject = new BehaviorSubject(
   typeof window !== "undefined" && JSON.parse(localStorage.getItem("user"))
@@ -82,10 +85,25 @@ async function updateProfile(data) {
   });
 }
 
-async function uploadToS3(data) {
+async function compressImage(file) {
+  const compressOptions = {
+    maxSizeMB: 0.25,
+    useWebWorker: true,
+    fileType: imageType,
+  };
+
+  return await imageCompression(file, compressOptions);
+}
+
+async function uploadToS3(file, fileType) {
   const securedLink = await fetchWrapper.get("/profile/getS3url");
 
   const { success, s3URL } = securedLink;
+
+  let data = file;
+  if (fileType === "image") {
+    data = await compressImage(data);
+  }
 
   if (success) {
     const resData = await s3Apis.s3Put(s3URL, data);
