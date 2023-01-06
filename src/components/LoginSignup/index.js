@@ -63,14 +63,19 @@ function LoginSignup({ activeForm = "login" }) {
 
   // On click Sign up
   async function onclickSignUp() {
-    const imageUploadRes = await userService.uploadToS3(
-      profilePicture,
-      "image"
-    );
-
-    setFormData({ ...formData, profileImageUrl: imageUploadRes.url });
-
     const response = await userService.signup(formData);
+
+    if (profilePicture) {
+      const imageUploadRes = await userService.uploadToS3(
+        profilePicture,
+        "image"
+      );
+
+      await userService.updateProfile({
+        profileImageUrl: imageUploadRes.url,
+      });
+    }
+
     await userService.updateUserCountry(ip_data_API);
     if (!response?.success) {
       setShowMessage({
