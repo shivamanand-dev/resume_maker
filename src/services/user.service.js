@@ -25,14 +25,14 @@ export const userService = {
 
 async function login(data) {
   return await fetchWrapper.post("/auth/login", data).then(async (data) => {
-    await fetch("/api/login", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data.authToken),
-    });
     if (data.success) {
+      await fetch("/api/login", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data.authToken),
+      });
       userSubject.next(data.userDetails);
       localStorage.setItem("user", JSON.stringify(data.userDetails));
     }
@@ -42,14 +42,14 @@ async function login(data) {
 
 async function signup(data) {
   return await fetchWrapper.post("/auth/signup", data).then(async (data) => {
-    await fetch("/api/login", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data.authToken),
-    });
     if (data.success) {
+      await fetch("/api/login", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data.authToken),
+      });
       userSubject.next(data.user);
       localStorage.setItem("user", JSON.stringify(data.user));
     }

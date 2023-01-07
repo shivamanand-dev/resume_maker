@@ -28,6 +28,7 @@ function LoginSignup({ activeForm = "login" }) {
   });
 
   const [profilePicture, setProfilePicture] = useState();
+  const [submitBtnIsDisabled, setSubmitBtnIsDisabled] = useState(false);
 
   // handle on Change for login
   function handleOnchange(e) {
@@ -40,6 +41,7 @@ function LoginSignup({ activeForm = "login" }) {
 
   // On click Login
   async function onclickLogin() {
+    setSubmitBtnIsDisabled(true);
     const loginDetails = {
       username: formData.username,
       password: formData.password,
@@ -52,6 +54,8 @@ function LoginSignup({ activeForm = "login" }) {
         colorType: "Error",
         message: response?.message,
       });
+
+      setSubmitBtnIsDisabled(false);
     } else {
       setShowMessage({
         showing: true,
@@ -63,7 +67,24 @@ function LoginSignup({ activeForm = "login" }) {
 
   // On click Sign up
   async function onclickSignUp() {
+    setSubmitBtnIsDisabled(true);
     const response = await userService.signup(formData);
+
+    if (!response?.success) {
+      setShowMessage({
+        showing: true,
+        colorType: "Error",
+        message: response?.message,
+      });
+      setSubmitBtnIsDisabled(false);
+      return;
+    } else {
+      setShowMessage({
+        showing: true,
+        colorType: "Success",
+        message: "Signed Up Successfully",
+      });
+    }
 
     if (profilePicture) {
       const imageUploadRes = await userService.uploadToS3(
@@ -77,19 +98,6 @@ function LoginSignup({ activeForm = "login" }) {
     }
 
     await userService.updateUserCountry(ip_data_API);
-    if (!response?.success) {
-      setShowMessage({
-        showing: true,
-        colorType: "Error",
-        message: response?.message,
-      });
-    } else {
-      setShowMessage({
-        showing: true,
-        colorType: "Success",
-        message: "Signed Up Successfully",
-      });
-    }
   }
 
   return (
@@ -135,17 +143,21 @@ function LoginSignup({ activeForm = "login" }) {
           <PrimaryButton
             buttonText={activeForm === "login" ? "Login" : "Sign Up"}
             onClick={activeForm === "login" ? onclickLogin : onclickSignUp}
+            disabled={submitBtnIsDisabled}
           />
 
           <p
             onClick={() => {
               if (activeForm === "login") {
                 router.push("/signup");
+              } else {
+                router.push("/login");
               }
             }}
             onKeyDown={() => {
               router.push("/signup");
             }}
+            className="switchForm"
           >
             {activeForm === "login" ? "Sign Up" : "Login"}
           </p>
