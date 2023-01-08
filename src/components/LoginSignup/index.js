@@ -29,6 +29,9 @@ function LoginSignup({ activeForm = "login" }) {
 
   const [profilePicture, setProfilePicture] = useState();
   const [submitBtnIsDisabled, setSubmitBtnIsDisabled] = useState(false);
+  const [submitBtnText, setSubmitBtnText] = useState(
+    activeForm === "login" ? "Login" : "Sign Up"
+  );
 
   // handle on Change for login
   function handleOnchange(e) {
@@ -42,6 +45,8 @@ function LoginSignup({ activeForm = "login" }) {
   // On click Login
   async function onclickLogin() {
     setSubmitBtnIsDisabled(true);
+    setSubmitBtnText("Loading...");
+
     const loginDetails = {
       username: formData.username,
       password: formData.password,
@@ -56,6 +61,7 @@ function LoginSignup({ activeForm = "login" }) {
       });
 
       setSubmitBtnIsDisabled(false);
+      setSubmitBtnText("Login");
     } else {
       setShowMessage({
         showing: true,
@@ -77,6 +83,7 @@ function LoginSignup({ activeForm = "login" }) {
         message: response?.message,
       });
       setSubmitBtnIsDisabled(false);
+      setSubmitBtnText("Sign up");
       return;
     } else {
       setShowMessage({
@@ -141,7 +148,7 @@ function LoginSignup({ activeForm = "login" }) {
             onChange={handleOnchange}
           />
           <PrimaryButton
-            buttonText={activeForm === "login" ? "Login" : "Sign Up"}
+            buttonText={submitBtnText}
             onClick={activeForm === "login" ? onclickLogin : onclickSignUp}
             disabled={submitBtnIsDisabled}
           />
