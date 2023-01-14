@@ -2,6 +2,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
+import { encryptAll } from "src/services/RSAencryption";
 import { userService } from "src/services/user.service";
 
 import { ip_data_API } from "@/utils/constants/app_config";
@@ -51,7 +52,9 @@ function LoginSignup({ activeForm = "login" }) {
       username: formData.username,
       password: formData.password,
     };
-    const response = await userService.login(loginDetails);
+
+    const encryptedLoginDetails = encryptAll(loginDetails);
+    const response = await userService.login(encryptedLoginDetails);
 
     if (!response?.success) {
       setShowMessage({
