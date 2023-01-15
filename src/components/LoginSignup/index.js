@@ -77,7 +77,18 @@ function LoginSignup({ activeForm = "login" }) {
   // On click Sign up
   async function onclickSignUp() {
     setSubmitBtnIsDisabled(true);
-    const response = await userService.signup(formData);
+
+    const toEncrypt = {
+      email: formData.email,
+      username: formData.username,
+      password: formData.password,
+    };
+
+    const encryptedData = encryptAll(toEncrypt);
+
+    const encryptedFormData = { ...formData, ...encryptedData };
+
+    const response = await userService.signup(encryptedFormData);
 
     if (!response?.success) {
       setShowMessage({
