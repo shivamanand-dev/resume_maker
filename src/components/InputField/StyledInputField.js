@@ -8,7 +8,7 @@ const StyledInputField = styled.section`
   .MuiInputBase-root,
   .MuiInputBase-input {
     width: 100%;
-    color: #fff;
+    /* color: #fff; */
   }
 `;
 
