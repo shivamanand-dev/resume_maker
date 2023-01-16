@@ -33,6 +33,7 @@ function LoginSignup({ activeForm = "login" }) {
   const [submitBtnText, setSubmitBtnText] = useState(
     activeForm === "login" ? "Login" : "Sign Up"
   );
+  const [emailIdValid, setEmailIdValid] = useState(false);
 
   // handle on Change for login
   function handleOnchange(e) {
@@ -41,6 +42,13 @@ function LoginSignup({ activeForm = "login" }) {
 
   function handleOnchangeProfilePic(e) {
     setProfilePicture(e.target.files[0]);
+  }
+
+  // handle email type
+  function handleOnErrorEmail(e) {
+    let emailValid = e.toLowerCase().match(/\S+@\S+\.\S+/);
+    setEmailIdValid(emailValid !== null);
+    return false;
   }
 
   // On click Login
@@ -77,6 +85,12 @@ function LoginSignup({ activeForm = "login" }) {
   // On click Sign up
   async function onclickSignUp() {
     setSubmitBtnIsDisabled(true);
+    handleOnErrorEmail(formData.email);
+
+    if (!emailIdValid) {
+      setSubmitBtnIsDisabled(false);
+      return true;
+    }
 
     const toEncrypt = {
       email: formData.email,
