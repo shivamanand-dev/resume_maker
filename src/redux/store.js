@@ -12,7 +12,7 @@ export const makeStore = () =>
       // disable warnings to store non-serializable values in the store
       getDefaultMiddleware({
         serializableCheck: {
-          ignoredActionPaths: ["payload", "editor"],
+          ignoredActionPaths: [],
         },
       }),
   });

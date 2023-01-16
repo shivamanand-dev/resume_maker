@@ -1,25 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export const initialState = {
-  access: "Public",
-  userDetails: [],
+  showAlert: false,
 };
 
 export const reduxStoreSlice = createSlice({
   name: "reduxStore",
   initialState: {
-    userDetails: [],
+    showAlert: false,
   },
 
   reducers: {
-    setUserDetails: (state, action) => {
-      state.userDetails = action.payload;
+    setShowAlert: (state, action) => {
+      state.showAlert = action.payload;
     },
   },
 });
 
-export const { setUserDetails } = reduxStoreSlice.actions;
+export const { setShowAlert } = reduxStoreSlice.actions;
 
-export const editorStates = (state) => state.editor;
+export const reduxStoreState = (state) => state.reduxStore;
 
 export default reduxStoreSlice.reducer;

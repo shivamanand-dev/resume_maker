@@ -2,17 +2,22 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { encryptAll } from "src/services/RSAencryption";
 import { userService } from "src/services/user.service";
 
+import { reduxStoreState, setShowAlert } from "@/redux/reduxStore";
 import { ip_data_API } from "@/utils/constants/app_config";
 
+import AlertMessage from "../AlertMessage";
 import { PrimaryButton } from "../Buttons";
 import InputField from "../InputField";
 import StyledLoginSignup from "./StyledLoginSignup";
 
 function LoginSignup({ activeForm = "login" }) {
   const router = useRouter();
+  const state = useSelector(reduxStoreState);
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -23,7 +28,7 @@ function LoginSignup({ activeForm = "login" }) {
   });
 
   const [showMessage, setShowMessage] = useState({
-    showing: false,
+    title: "Success",
     colorType: "success",
     message: "",
   });
@@ -48,7 +53,14 @@ function LoginSignup({ activeForm = "login" }) {
   function handleOnErrorEmail(e) {
     let emailValid = e.toLowerCase().match(/\S+@\S+\.\S+/);
     setEmailIdValid(emailValid !== null);
+
     return false;
+  }
+
+  function timeOut() {
+    setTimeout(() => {
+      dispatch(setShowAlert(false));
+    }, 1500);
   }
 
   // On click Login
@@ -65,20 +77,25 @@ function LoginSignup({ activeForm = "login" }) {
     const response = await userService.login(encryptedLoginDetails);
 
     if (!response?.success) {
+      dispatch(setShowAlert(true));
       setShowMessage({
-        showing: true,
-        colorType: "Error",
+        title: "Error",
+        colorType: "error",
         message: response?.message,
       });
+
+      timeOut();
 
       setSubmitBtnIsDisabled(false);
       setSubmitBtnText("Login");
     } else {
+      dispatch(setShowAlert(true));
       setShowMessage({
-        showing: true,
-        colorType: "Success",
+        title: "Success",
+        colorType: "success",
         message: "Logged In Successfully",
       });
+      timeOut();
     }
   }
 
@@ -86,9 +103,18 @@ function LoginSignup({ activeForm = "login" }) {
   async function onclickSignUp() {
     setSubmitBtnIsDisabled(true);
     handleOnErrorEmail(formData.email);
+    setSubmitBtnText("Loading...");
 
     if (!emailIdValid) {
       setSubmitBtnIsDisabled(false);
+      dispatch(setShowAlert(true));
+      setShowMessage({
+        title: "Error",
+        colorType: "error",
+        message: "Incorrect Email",
+      });
+      timeOut();
+      setSubmitBtnText("Sign up");
       return true;
     }
 
@@ -105,20 +131,24 @@ function LoginSignup({ activeForm = "login" }) {
     const response = await userService.signup(encryptedFormData);
 
     if (!response?.success) {
+      dispatch(setShowAlert(true));
       setShowMessage({
-        showing: true,
-        colorType: "Error",
+        title: "Error",
+        colorType: "error",
         message: response?.message,
       });
+      timeOut();
       setSubmitBtnIsDisabled(false);
       setSubmitBtnText("Sign up");
       return;
     } else {
+      dispatch(setShowAlert(true));
       setShowMessage({
-        showing: true,
-        colorType: "Success",
+        title: "Success",
+        colorType: "success",
         message: "Signed Up Successfully",
       });
+      timeOut();
     }
 
     if (profilePicture) {
@@ -137,6 +167,13 @@ function LoginSignup({ activeForm = "login" }) {
 
   return (
     <StyledLoginSignup>
+      {state.showAlert && (
+        <AlertMessage
+          title={showMessage.title}
+          message={showMessage.message}
+          severity={showMessage.colorType}
+        />
+      )}
       <div>
         <div>
           {activeForm === "signUp" && (
@@ -197,9 +234,9 @@ function LoginSignup({ activeForm = "login" }) {
             {activeForm === "login" ? "Sign Up" : "Login"}
           </p>
 
-          {showMessage.showing && (
+          {/* {showMessage.showing && (
             <p style={{ color: "red" }}>{showMessage.message}</p>
-          )}
+          )} */}
         </div>
       </div>
     </StyledLoginSignup>
