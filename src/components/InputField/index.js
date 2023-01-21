@@ -1,4 +1,4 @@
-import { Input } from "@material-ui/core";
+import { Input } from "@mui/material";
 
 import StyledInputField from "./StyledInputField";
 
