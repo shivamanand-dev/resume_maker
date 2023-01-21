@@ -4,7 +4,6 @@ import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import SearchIcon from "@mui/icons-material/Search";
 import {
   AppBar,
   Badge,
@@ -17,10 +16,9 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-import InputField from "../InputField";
-import { Search, SearchIconWrapper, StyledNavbar } from "./StyledNavbar";
+import { StyledNavbar } from "./StyledNavbar";
 
-function Navbar() {
+function Navbar({ messageBadgeContent = 1 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
@@ -85,7 +83,7 @@ function Navbar() {
     >
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={messageBadgeContent} color="error">
             <MailIcon />
           </Badge>
         </IconButton>
@@ -121,7 +119,7 @@ function Navbar() {
   return (
     <StyledNavbar>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="static" color="transparent" sx={{ color: "#eeeeee" }}>
           <Toolbar>
             <IconButton
               size="large"
@@ -140,15 +138,6 @@ function Navbar() {
             >
               MUI
             </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <InputField
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <IconButton
@@ -156,7 +145,7 @@ function Navbar() {
                 aria-label="show 4 new mails"
                 color="inherit"
               >
-                <Badge badgeContent={4} color="error">
+                <Badge badgeContent={messageBadgeContent} color="error">
                   <MailIcon />
                 </Badge>
               </IconButton>
