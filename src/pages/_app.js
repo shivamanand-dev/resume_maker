@@ -8,7 +8,8 @@ import { ThemeProvider } from "styled-components";
 import Navbar from "@/components/Navbar";
 // import { userService } from "src/services/user.service";
 import store from "@/redux/store";
-import theme from "@/utils/theme/theme";
+
+import { darkTheme } from "../utils/Theme/theme";
 // import { ip_data_API } from "@/utils/constants/app_config";
 
 function MyApp({ Component, pageProps }) {
@@ -22,7 +23,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
         <Navbar />
         <Container>
           <Component {...pageProps} />
