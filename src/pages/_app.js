@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 
-import { Container } from "@material-ui/core";
+import { Container } from "@mui/material";
 // import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";

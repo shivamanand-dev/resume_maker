@@ -6,9 +6,9 @@ export const Search = styled.section`
   position: "relative";
   border-radius: 4px;
   background: transparent;
-  :hover {
+  /* :hover {
     background: ${({ theme }) => theme.COLORS.DARK_BACKGROUND};
-  }
+  } */
   margin-right: 1rem;
   margin-left: 0;
   width: 100%;
