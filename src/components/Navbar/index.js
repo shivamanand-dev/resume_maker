@@ -1,7 +1,7 @@
 // import { MenuIcon, SearchIcon } from "@mui/icons-material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
-import MenuIcon from "@mui/icons-material/Menu";
+// import MenuIcon from "@mui/icons-material/Menu";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
@@ -25,9 +25,9 @@ function Navbar({ messageBadgeContent = 1 }) {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleProfileMenuOpen = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -101,7 +101,7 @@ function Navbar({ messageBadgeContent = 1 }) {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      {/* <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -112,6 +112,18 @@ function Navbar({ messageBadgeContent = 1 }) {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+      </MenuItem> */}
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <AccountCircle />
+          </Badge>
+        </IconButton>
+        <p>Profile</p>
       </MenuItem>
     </Menu>
   );
@@ -119,9 +131,12 @@ function Navbar({ messageBadgeContent = 1 }) {
   return (
     <StyledNavbar>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" color="transparent" sx={{ color: "#eeeeee" }}>
+        <AppBar
+          position="static"
+          sx={{ background: "#3c3c3c", color: "#eeeeee" }}
+        >
           <Toolbar>
-            <IconButton
+            {/* <IconButton
               size="large"
               edge="start"
               color="inherit"
@@ -129,18 +144,18 @@ function Navbar({ messageBadgeContent = 1 }) {
               sx={{ mr: 2 }}
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
             <Typography
               variant="h6"
               noWrap
               component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
+              sx={{ display: { sm: "block" } }}
             >
-              MUI
+              Resume Maker
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton
+              {/* <IconButton
                 size="large"
                 aria-label="show 4 new mails"
                 color="inherit"
@@ -148,7 +163,7 @@ function Navbar({ messageBadgeContent = 1 }) {
                 <Badge badgeContent={messageBadgeContent} color="error">
                   <MailIcon />
                 </Badge>
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 size="large"
                 aria-label="show 17 new notifications"
@@ -164,7 +179,7 @@ function Navbar({ messageBadgeContent = 1 }) {
                 aria-label="account of current user"
                 aria-controls={menuId}
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                // onClick={handleProfileMenuOpen}
                 color="inherit"
               >
                 <AccountCircle />
