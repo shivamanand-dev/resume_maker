@@ -8,6 +8,7 @@ import { userService } from "src/services/user.service";
 
 import { reduxStoreState, setShowAlert } from "@/redux/reduxStore";
 import { ip_data_API } from "@/utils/constants/app_config";
+import { app_routes } from "@/utils/constants/app_constants";
 
 import AlertMessage from "../AlertMessage";
 import { PrimaryButton } from "../Buttons";
@@ -97,6 +98,10 @@ function LoginSignup({ activeForm = "login" }) {
       });
       timeOut();
     }
+
+    return router.push(
+      `${app_routes.profile}/${response?.userDetails?.username}`
+    );
   }
 
   // On click Sign up
@@ -221,13 +226,13 @@ function LoginSignup({ activeForm = "login" }) {
           <p
             onClick={() => {
               if (activeForm === "login") {
-                router.push("/signup");
+                router.push(app_routes.signup);
               } else {
-                router.push("/login");
+                router.push(app_routes.login);
               }
             }}
             onKeyDown={() => {
-              router.push("/signup");
+              router.push(app_routes.signup);
             }}
             className="switchForm"
           >
