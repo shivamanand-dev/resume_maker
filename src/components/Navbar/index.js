@@ -1,5 +1,6 @@
 // import { MenuIcon, SearchIcon } from "@mui/icons-material";
 // import MenuIcon from "@mui/icons-material/Menu";
+import { app_routes } from "@/utils/constants/app_constants";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
 import LoginIcon from "@mui/icons-material/Login";
@@ -176,7 +177,7 @@ function Navbar({ messageBadgeContent = 1 }) {
                     // aria-controls={menuId}
                     aria-haspopup="true"
                     onClick={() => {
-                      sendToRoute("/login");
+                      sendToRoute(app_routes.login);
                     }}
                     color="inherit"
                   >
@@ -188,7 +189,9 @@ function Navbar({ messageBadgeContent = 1 }) {
                     aria-label="account of current user"
                     aria-controls={menuId}
                     aria-haspopup="true"
-                    // onClick={handleProfileMenuOpen}
+                    onClick={() => {
+                      sendToRoute(app_routes.signup);
+                    }}
                     color="inherit"
                   >
                     <FollowTheSignsIcon />

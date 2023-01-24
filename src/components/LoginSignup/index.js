@@ -168,6 +168,9 @@ function LoginSignup({ activeForm = "login" }) {
     }
 
     await userService.updateUserCountry(ip_data_API);
+    return router.push(
+      `${app_routes.profile}/${response?.userDetails?.username}`
+    );
   }
 
   return (
