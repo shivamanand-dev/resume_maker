@@ -59,6 +59,8 @@ async function signup(data) {
 
 async function logout() {
   localStorage.clear();
+
+  return await fetch("/api/logout");
 }
 
 async function updateUserCountry(api_key) {
