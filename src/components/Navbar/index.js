@@ -1,8 +1,11 @@
 // import { MenuIcon, SearchIcon } from "@mui/icons-material";
+// import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 import MailIcon from "@mui/icons-material/Mail";
-import MenuIcon from "@mui/icons-material/Menu";
-import MoreIcon from "@mui/icons-material/MoreVert";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   AppBar,
@@ -14,20 +17,25 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { userService } from "src/services/user.service";
 
 import { StyledNavbar } from "./StyledNavbar";
 
 function Navbar({ messageBadgeContent = 1 }) {
+  const user = userService.userValue;
+  const router = useRouter();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleProfileMenuOpen = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -41,6 +49,10 @@ function Navbar({ messageBadgeContent = 1 }) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  function sendToRoute(route) {
+    router.push(route);
+  }
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -101,7 +113,7 @@ function Navbar({ messageBadgeContent = 1 }) {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      {/* <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -112,6 +124,18 @@ function Navbar({ messageBadgeContent = 1 }) {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+      </MenuItem> */}
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <AccountCircle />
+          </Badge>
+        </IconButton>
+        <p>Profile</p>
       </MenuItem>
     </Menu>
   );
@@ -119,9 +143,12 @@ function Navbar({ messageBadgeContent = 1 }) {
   return (
     <StyledNavbar>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" color="transparent" sx={{ color: "#eeeeee" }}>
+        <AppBar
+          position="static"
+          sx={{ background: "#3c3c3c", color: "#eeeeee" }}
+        >
           <Toolbar>
-            <IconButton
+            {/* <IconButton
               size="large"
               edge="start"
               color="inherit"
@@ -129,18 +156,18 @@ function Navbar({ messageBadgeContent = 1 }) {
               sx={{ mr: 2 }}
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
             <Typography
               variant="h6"
               noWrap
               component="div"
-              sx={{ display: { xs: "none", sm: "block" } }}
+              sx={{ display: { sm: "block" } }}
             >
-              MUI
+              Resume Maker
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <IconButton
+              {/* <IconButton
                 size="large"
                 aria-label="show 4 new mails"
                 color="inherit"
@@ -148,27 +175,71 @@ function Navbar({ messageBadgeContent = 1 }) {
                 <Badge badgeContent={messageBadgeContent} color="error">
                   <MailIcon />
                 </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+              </IconButton> */}
+              {!user && (
+                <>
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    // aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={() => {
+                      sendToRoute("/login");
+                    }}
+                    color="inherit"
+                  >
+                    <LoginIcon />
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    // onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <FollowTheSignsIcon />
+                  </IconButton>
+                </>
+              )}
+              {user && (
+                <>
+                  <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                  >
+                    <Badge badgeContent={17} color="error">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    // onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="login"
+                    // aria-controls={menuId}
+                    aria-haspopup="true"
+                    // onClick={handleOnClickLogin}
+                    color="inherit"
+                  >
+                    <LogoutIcon />
+                  </IconButton>
+                </>
+              )}
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <IconButton
@@ -179,7 +250,7 @@ function Navbar({ messageBadgeContent = 1 }) {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <MoreVertIcon />
               </IconButton>
             </Box>
           </Toolbar>

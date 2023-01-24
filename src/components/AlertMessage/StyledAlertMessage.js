@@ -6,4 +6,5 @@ export const StyledAlertMessage = styled.section`
   top: 1rem;
   max-width: 450px;
   width: 100%;
+  z-index: 99999;
 `;
