@@ -228,7 +228,9 @@ function Navbar({ messageBadgeContent = 1 }) {
                     aria-label="login"
                     // aria-controls={menuId}
                     aria-haspopup="true"
-                    // onClick={handleOnClickLogin}
+                    onClick={() => {
+                      userService.logout();
+                    }}
                     color="inherit"
                   >
                     <LogoutIcon />
