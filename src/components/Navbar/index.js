@@ -1,6 +1,5 @@
 // import { MenuIcon, SearchIcon } from "@mui/icons-material";
 // import MenuIcon from "@mui/icons-material/Menu";
-import { app_routes } from "@/utils/constants/app_constants";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
 import LoginIcon from "@mui/icons-material/Login";
@@ -21,6 +20,8 @@ import {
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { userService } from "src/services/user.service";
+
+import { app_routes } from "@/utils/constants/app_constants";
 
 import { StyledNavbar } from "./StyledNavbar";
 
