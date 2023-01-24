@@ -1,12 +1,14 @@
 import "../styles/globals.css";
 
-import { Container, ThemeProvider } from "@material-ui/core";
+import { Container } from "@mui/material";
 // import { useEffect } from "react";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "styled-components";
 
+import Navbar from "@/components/Navbar";
 // import { userService } from "src/services/user.service";
 import store from "@/redux/store";
-import { mainTheme } from "@/utils/Theme/mainTheme";
+import theme from "@/utils/theme/theme";
 // import { ip_data_API } from "@/utils/constants/app_config";
 
 function MyApp({ Component, pageProps }) {
@@ -20,7 +22,8 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={mainTheme}>
+      <ThemeProvider theme={theme}>
+        <Navbar />
         <Container>
           <Component {...pageProps} />
         </Container>
