@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const initialState = {
-  showAlert: false,
-};
+// export const initialState = {
+//   showAlert: false,
+// };
 
 export const reduxStoreSlice = createSlice({
   name: "reduxStore",
