@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 
+import { NoSsr } from "@mui/base";
 import { Container } from "@mui/material";
 // import { useEffect } from "react";
 import { Provider } from "react-redux";
@@ -24,10 +25,13 @@ function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <ThemeProvider theme={darkTheme}>
-        <Navbar />
-        <Container>
-          <Component {...pageProps} />
-        </Container>
+        <NoSsr>
+          <Navbar />
+          <div style={{ height: "64px" }}></div>
+          <Container>
+            <Component {...pageProps} />
+          </Container>
+        </NoSsr>
       </ThemeProvider>
     </Provider>
   );
