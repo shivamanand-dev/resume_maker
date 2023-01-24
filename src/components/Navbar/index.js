@@ -167,15 +167,6 @@ function Navbar({ messageBadgeContent = 1 }) {
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              {/* <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-              >
-                <Badge badgeContent={messageBadgeContent} color="error">
-                  <MailIcon />
-                </Badge>
-              </IconButton> */}
               {!user && (
                 <>
                   <IconButton
