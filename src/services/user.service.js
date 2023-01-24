@@ -1,4 +1,5 @@
 import imageCompression from "browser-image-compression";
+import Router from "next/router";
 import { BehaviorSubject } from "rxjs";
 
 import { fetchWrapper } from "./fetchWrapper";
@@ -58,9 +59,10 @@ async function signup(data) {
 }
 
 async function logout() {
+  userSubject.next({});
   localStorage.clear();
-
-  return await fetch("/api/logout");
+  await fetch("/api/logout");
+  return Router.push("/login");
 }
 
 async function updateUserCountry(api_key) {

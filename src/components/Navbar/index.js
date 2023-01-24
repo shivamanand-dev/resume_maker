@@ -56,6 +56,10 @@ function Navbar({ messageBadgeContent = 1 }) {
     router.push(route);
   }
 
+  async function onClickLogout() {
+    await userService.logout();
+  }
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -229,7 +233,7 @@ function Navbar({ messageBadgeContent = 1 }) {
                     // aria-controls={menuId}
                     aria-haspopup="true"
                     onClick={() => {
-                      userService.logout();
+                      onClickLogout();
                     }}
                     color="inherit"
                   >
