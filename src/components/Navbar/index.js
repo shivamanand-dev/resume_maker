@@ -1,8 +1,11 @@
 // import { MenuIcon, SearchIcon } from "@mui/icons-material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
 // import MenuIcon from "@mui/icons-material/Menu";
-import MoreIcon from "@mui/icons-material/MoreVert";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
+import MailIcon from "@mui/icons-material/Mail";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   AppBar,
@@ -14,11 +17,16 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { userService } from "src/services/user.service";
 
 import { StyledNavbar } from "./StyledNavbar";
 
 function Navbar({ messageBadgeContent = 1 }) {
+  const user = userService.userValue;
+  const router = useRouter();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
@@ -41,6 +49,10 @@ function Navbar({ messageBadgeContent = 1 }) {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  function sendToRoute(route) {
+    router.push(route);
+  }
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -164,26 +176,70 @@ function Navbar({ messageBadgeContent = 1 }) {
                   <MailIcon />
                 </Badge>
               </IconButton> */}
-              <IconButton
-                size="large"
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="error">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                // onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+              {!user && (
+                <>
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    // aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={() => {
+                      sendToRoute("/login");
+                    }}
+                    color="inherit"
+                  >
+                    <LoginIcon />
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    // onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <FollowTheSignsIcon />
+                  </IconButton>
+                </>
+              )}
+              {user && (
+                <>
+                  <IconButton
+                    size="large"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                  >
+                    <Badge badgeContent={17} color="error">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    // onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                  </IconButton>
+
+                  <IconButton
+                    size="large"
+                    edge="end"
+                    aria-label="login"
+                    // aria-controls={menuId}
+                    aria-haspopup="true"
+                    // onClick={handleOnClickLogin}
+                    color="inherit"
+                  >
+                    <LogoutIcon />
+                  </IconButton>
+                </>
+              )}
             </Box>
             <Box sx={{ display: { xs: "flex", md: "none" } }}>
               <IconButton
@@ -194,7 +250,7 @@ function Navbar({ messageBadgeContent = 1 }) {
                 onClick={handleMobileMenuOpen}
                 color="inherit"
               >
-                <MoreIcon />
+                <MoreVertIcon />
               </IconButton>
             </Box>
           </Toolbar>
