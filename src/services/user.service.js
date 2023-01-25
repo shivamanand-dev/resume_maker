@@ -62,7 +62,7 @@ async function logout() {
   userSubject.next({});
   localStorage.clear();
   await fetch("/api/logout");
-  return Router.push("/login");
+  return Router.reload();
 }
 
 async function updateUserCountry(api_key) {

@@ -3,3 +3,5 @@ export const app_routes = {
   signup: "/signup",
   profile: "/profile",
 };
+
+export const lockedRoutes = [app_routes.profile, "/profile/[pid]"];
