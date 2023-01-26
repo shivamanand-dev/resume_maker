@@ -4,7 +4,11 @@ export default async function token(req, res) {
     return e.split("=");
   });
 
-  const authToken = splittedHeader.filter((word) => word[0] === " authToken");
+  let authToken = splittedHeader.filter((word) => word[0] === " authToken");
+
+  if (authToken.length === 0) {
+    authToken = splittedHeader.filter((word) => word[0] === "authToken");
+  }
 
   res.status(200).json({ token: authToken[0][1] });
 }
