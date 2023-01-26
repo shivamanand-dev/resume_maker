@@ -39,7 +39,6 @@ function LoginSignup({ activeForm = "login" }) {
   const [submitBtnText, setSubmitBtnText] = useState(
     activeForm === "login" ? "Login" : "Sign Up"
   );
-  const [emailIdValid, setEmailIdValid] = useState(false);
 
   // handle on Change for login
   function handleOnchange(e) {
@@ -51,11 +50,11 @@ function LoginSignup({ activeForm = "login" }) {
   }
 
   // handle email type
-  function handleOnErrorEmail(e) {
-    let emailValid = e.toLowerCase().match(/\S+@\S+\.\S+/);
-    setEmailIdValid(emailValid !== null);
+  async function handleOnErrorEmail(e) {
+    let emailValid = await e.toLowerCase().match(/\S+@\S+\.\S+/);
+    // setEmailIdValid(emailValid !== null);
 
-    return false;
+    return emailValid !== null;
   }
 
   function timeOut() {
@@ -107,10 +106,10 @@ function LoginSignup({ activeForm = "login" }) {
   // On click Sign up
   async function onclickSignUp() {
     setSubmitBtnIsDisabled(true);
-    handleOnErrorEmail(formData.email);
     setSubmitBtnText("Loading...");
+    const validEmail = handleOnErrorEmail(formData.email);
 
-    if (!emailIdValid) {
+    if (!validEmail) {
       setSubmitBtnIsDisabled(false);
       dispatch(setShowAlert(true));
       setShowMessage({
