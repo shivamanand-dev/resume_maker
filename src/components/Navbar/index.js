@@ -220,7 +220,9 @@ function Navbar({ messageBadgeContent = 1 }) {
                     aria-label="account of current user"
                     aria-controls={menuId}
                     aria-haspopup="true"
-                    // onClick={handleProfileMenuOpen}
+                    onClick={() => {
+                      router.push(`${app_routes.profile}/${user?.username}`);
+                    }}
                     color="inherit"
                   >
                     <AccountCircle />
