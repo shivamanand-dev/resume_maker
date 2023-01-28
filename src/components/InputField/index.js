@@ -10,9 +10,10 @@ function InputField({
   onChange,
   error,
   name,
+  customStyle = {},
 }) {
   return (
-    <StyledInputField>
+    <StyledInputField style={customStyle}>
       <Input
         placeholder={placeholder}
         required={required}

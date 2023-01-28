@@ -23,6 +23,7 @@ import { userService } from "src/services/user.service";
 
 import { app_routes } from "@/utils/constants/app_constants";
 
+import InputField from "../InputField";
 import { StyledNavbar } from "./StyledNavbar";
 
 function Navbar({ messageBadgeContent = 1 }) {
@@ -205,6 +206,7 @@ function Navbar({ messageBadgeContent = 1 }) {
               )}
               {user && (
                 <>
+                  <InputField placeholder="Search Username" />
                   <IconButton
                     size="large"
                     aria-label="show 17 new notifications"

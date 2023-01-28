@@ -1,5 +1,6 @@
 export const COLORS = {
   DARK_BACKGROUND: "#3c3c3c",
+  LIGHT_TEXT_COLOR: "#eeeeee",
 };
 export const error = {
   background: "#F80000",

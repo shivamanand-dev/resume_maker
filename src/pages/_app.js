@@ -12,7 +12,7 @@ import Navbar from "@/components/Navbar";
 import store from "@/redux/store";
 
 import { app_routes, lockedRoutes } from "../utils/constants/app_constants";
-import { darkTheme } from "../utils/Theme/theme";
+import theme from "../utils/Theme/theme";
 // import { ip_data_API } from "@/utils/constants/app_config";
 
 function MyApp({ Component, pageProps }) {
@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={theme}>
         <NoSsr>
           <Navbar />
           <div style={{ height: "64px" }}></div>
